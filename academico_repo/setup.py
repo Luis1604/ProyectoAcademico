@@ -29,7 +29,7 @@ tests_require = [
 ]
 
 setup(
-    name='academico_repo',
+    name='Academico',
     version='0.0',
     description='Academico',
     long_description=README + '\n\n' + CHANGES,
@@ -52,10 +52,10 @@ setup(
     install_requires=requires,
     entry_points={
         'paste.app_factory': [
-            'main = academico_repo:main',
+            'main = Academico:main',
         ],
         'console_scripts': [
-            'initialize_academico_repo_db=academico_repo.scripts.initialize_db:main',
+            'initialize_Academico_db=Academico.scripts.initialize_db:main',
         ],
     },
 )

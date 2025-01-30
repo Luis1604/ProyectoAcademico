@@ -9,9 +9,9 @@ import pytest
 import transaction
 import webtest
 
-from academico_repo import main
-from academico_repo import models
-from academico_repo.models.meta import Base
+from Academico import main
+from Academico import models
+from Academico.models.meta import Base
 
 
 def pytest_addoption(parser):

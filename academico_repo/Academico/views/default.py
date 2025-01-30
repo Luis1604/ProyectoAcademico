@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from .. import models
 
 
-@view_config(route_name='home', renderer='academico_repo:templates/mytemplate.mako')
+@view_config(route_name='home', renderer='Academico:templates/mytemplate.mako')
 def my_view(request):
     try:
         query = request.dbsession.query(models.MyModel)

@@ -1,6 +1,6 @@
-from academico_repo import models
-from academico_repo.views.default import my_view
-from academico_repo.views.notfound import notfound_view
+from Academico import models
+from Academico.views.default import my_view
+from Academico.views.notfound import notfound_view
 
 
 def test_my_view_failure(app_request):
