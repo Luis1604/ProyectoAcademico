@@ -1,33 +1,63 @@
-# Academico/__init__.py
 from pyramid.config import Configurator
-from sqlalchemy import engine_from_config
-from sqlalchemy.orm import sessionmaker
-import zope.sqlalchemy
+from pyramid.security import Allow, Everyone, Authenticated
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 from .models.meta import initialize_engine, initialize_session, Base
+import redis
+import zope.sqlalchemy
+
+class Root:
+    __name__ = __parent__ = None
+    __acl__ = [
+        (Allow, 'group:admin', 'create'),
+        (Allow, 'group:admin', 'edit'),
+        (Allow, 'group:admin', 'delete'),
+        (Allow, 'group:admin', 'assign'),
+        (Allow, 'group:profesor', 'view'),
+        (Allow, 'group:profesor', 'edit'),
+        (Allow, 'group:estudiante', 'view'),
+        (Allow, Everyone, 'view'),
+    ]
+
+    def __init__(self, request):
+        pass
 
 def main(global_config, **settings):
     """Retorna la aplicación Pyramid."""
-    config = Configurator(settings=settings)
+    
+    # Crear política de autenticación y autorización
+    authn_policy = AuthTktAuthenticationPolicy(secret='mysecret', cookie_name='auth_tkt')
+    authz_policy = ACLAuthorizationPolicy()
 
-    # Incluye pyramid_tm para gestionar transacciones
+    # Configurar Pyramid con autenticación y autorización
+    config = Configurator(settings=settings, root_factory=Root)
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
+
+    # Incluir pyramid_tm para gestionar transacciones
     config.include('pyramid_tm')
 
-    # Configura el motor de SQLAlchemy
+    # Configurar SQLAlchemy
     engine = initialize_engine(settings["sqlalchemy.url"])
-    Base.metadata.bind = engine
-
-    # Configura la fábrica de sesiones
     session_factory = initialize_session(engine)
     config.registry['db_session_factory'] = session_factory
 
-    # Registra la sesión con zope.sqlalchemy
+    # Configurar Redis
+    redis_url = settings.get("redis.url", "redis://localhost:6379/0")
+    redis_client = redis.Redis.from_url(redis_url, decode_responses=True)
+    config.registry["redis_client"] = redis_client
+
+    # Agregar Redis a cada request
+    config.add_request_method(lambda r: redis_client, 'redis', reify=True)
+
+    # Configurar sesión gestionada por zope.sqlalchemy
     config.add_request_method(
         lambda r: get_tm_session(session_factory, r.tm, request=r),
         'dbsession',
         reify=True
     )
 
-    # Incluye las rutas y vistas de tu aplicación
+    # Incluir rutas y vistas
     config.include('.routes')
     config.scan()
 

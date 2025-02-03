@@ -1,6 +1,13 @@
-from sqlalchemy import Column, Integer, ForeignKey, Date
+import enum
+from sqlalchemy import Column, Integer, ForeignKey, Date, Enum
 from sqlalchemy.orm import relationship
 from .meta import Base
+
+class EstadoAsistencia(enum.Enum):
+    presente = 'presente'
+    ausente = 'ausente'
+    tarde = 'tarde'
+    justificada = 'justificada'
 
 class Asistencia(Base):
     __tablename__ = 'asistencias'
@@ -9,7 +16,7 @@ class Asistencia(Base):
     id_usuario = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
     id_curso = Column(Integer, ForeignKey('cursos.id'), nullable=False)
     fecha = Column(Date, nullable=False)
-    presente = Column(Integer, nullable=False)  # 1 para presente, 0 para ausente
+    estado = Column(Enum(EstadoAsistencia), nullable=False)
 
     usuario = relationship("Usuario", back_populates="asistencias")
     curso = relationship("Curso", back_populates="asistencias")

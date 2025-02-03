@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from .meta import Base
 
@@ -8,11 +8,12 @@ class Curso(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String, nullable=False)
     descripcion = Column(String, nullable=True)
-    profesor_asignado = Column(Integer, nullable=False)
+    profesor_asignado = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
 
-    # Relación con la tabla de tareas
+    # Relación con el profesor
+    profesor = relationship("Usuario", back_populates="cursos_asignados")
+
+    # Relación con otras tablas
     tareas = relationship("Tarea", back_populates="curso")
-    # Relación con la tabla de matrículas
     matriculas = relationship("Matricula", back_populates="curso")
-    # Relación con la tabla de asistencias
     asistencias = relationship("Asistencia", back_populates="curso")
