@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.orm import Session
-from academico.models.tarea import Tarea, EstadoTarea
+from Academico.models.tarea import Tarea, EstadoTarea
 
 def crear_tarea(dbsession: Session, id_curso: int, titulo: str, descripcion: str, fecha_entrega: datetime):
     tarea = Tarea(

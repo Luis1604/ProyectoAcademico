@@ -1,4 +1,4 @@
-from academico.models import Asistencia, Usuario, Curso
+from Academico.models import Asistencia, Usuario, Curso
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 

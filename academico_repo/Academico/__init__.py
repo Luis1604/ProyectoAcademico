@@ -5,6 +5,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from .models.meta import initialize_engine, initialize_session, Base
 import redis
 import zope.sqlalchemy
+from .routes import includeme
 
 class Root:
     __name__ = __parent__ = None
@@ -57,8 +58,11 @@ def main(global_config, **settings):
         reify=True
     )
 
+    config.add_static_view(name='static', path='Academico:static', cache_max_age=3600)
+
     # Incluir rutas y vistas
-    config.include('.routes')
+    config.include(includeme)
+    config.include('pyramid_mako')
     config.scan()
 
     return config.make_wsgi_app()

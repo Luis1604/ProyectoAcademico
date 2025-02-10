@@ -3,10 +3,10 @@ import pandas as pd
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from sqlalchemy.orm import Session
-from academico.models.asistencia import Asistencia
-from academico.models.tarea import Tarea
-from academico.models.usuario import Usuario
-from academico.models.curso import Curso
+from Academico.models.asistencia import Asistencia
+from Academico.models.tarea import Tarea
+from Academico.models.usuario import Usuario
+from Academico.models.curso import Curso
 
 def generar_reporte_asistencias_pdf(dbsession: Session, id_curso: int):
     """Genera un PDF con las asistencias de un curso"""

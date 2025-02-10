@@ -1,4 +1,4 @@
-from academico.models import Curso, Usuario
+from Academico.models import Curso, Usuario
 from sqlalchemy.exc import IntegrityError
 
 def crear_curso(dbsession, nombre, descripcion, profesor_id):

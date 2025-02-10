@@ -1,5 +1,5 @@
 from sqlalchemy.exc import IntegrityError
-from academico.models.usuario import Usuario
+from Academico.models.usuario import Usuario
 
 def registrar_usuario(dbsession, nombre, email, contrasena, rol):
     """Registra un nuevo usuario con contraseña cifrada"""

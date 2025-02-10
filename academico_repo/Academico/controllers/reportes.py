@@ -1,8 +1,8 @@
 from pyramid.view import view_config
 from pyramid.response import Response
-from academico.services.reportes import generar_reporte_asistencias_pdf, generar_reporte_calificaciones_excel
+from Academico.services.reportes import generar_reporte_asistencias_pdf, generar_reporte_calificaciones_excel
 
-@view_config(route_name="reporte_asistencias_pdf", request_method="GET", permission="admin")
+@view_config(route_name="reporte_asistencias_pdf_view", request_method="GET", permission="admin")
 def reporte_asistencias_pdf_view(request):
     dbsession = request.dbsession
     id_curso = request.matchdict["id_curso"]
@@ -14,7 +14,7 @@ def reporte_asistencias_pdf_view(request):
     response.body = buffer.getvalue()
     return response
 
-@view_config(route_name="reporte_calificaciones_excel", request_method="GET", permission="admin")
+@view_config(route_name="reporte_calificaciones_excel_view", request_method="GET", permission="admin")
 def reporte_calificaciones_excel_view(request):
     dbsession = request.dbsession
     id_curso = request.matchdict["id_curso"]

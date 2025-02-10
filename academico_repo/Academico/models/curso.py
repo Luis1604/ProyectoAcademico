@@ -11,7 +11,7 @@ class Curso(Base):
     profesor_asignado = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
 
     # Relación con el profesor
-    profesor = relationship("Usuario", back_populates="cursos_asignados")
+    profesor = relationship("Usuario", back_populates="cursos")
 
     # Relación con otras tablas
     tareas = relationship("Tarea", back_populates="curso")

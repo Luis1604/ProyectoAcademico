@@ -1,5 +1,5 @@
 from datetime import datetime
-from .models import Notificacion, Usuario
+from Academico.models import Notificacion, Usuario
 
 class NotificacionService:
     def __init__(self, dbsession):

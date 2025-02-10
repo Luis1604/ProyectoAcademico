@@ -1,4 +1,4 @@
-from .models import Usuario
+from Academico.models import Usuario
 from sqlalchemy.exc import IntegrityError
 
 class UsuarioService:

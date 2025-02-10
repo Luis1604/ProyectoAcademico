@@ -1,4 +1,4 @@
-from academico.models.usuario import Usuario
+from Academico.models.usuario import Usuario
 
 def autenticar_usuario(dbsession, email, contrasena):
     """Verifica credenciales de usuario"""

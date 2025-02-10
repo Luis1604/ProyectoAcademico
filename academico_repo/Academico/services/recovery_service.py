@@ -1,6 +1,6 @@
 import smtplib
 from email.mime.text import MIMEText
-from academico.models.usuario import Usuario
+from Academico.models.usuario import Usuario
 import random
 import string
 

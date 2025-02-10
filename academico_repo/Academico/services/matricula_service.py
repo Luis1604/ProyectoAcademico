@@ -1,4 +1,4 @@
-from academico.models import Matricula, Usuario, Curso
+from Academico.models import Matricula, Usuario, Curso
 from sqlalchemy.exc import IntegrityError
 
 def matricular_estudiante(dbsession, usuario_id, curso_id):

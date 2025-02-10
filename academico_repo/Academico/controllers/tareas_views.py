@@ -1,7 +1,7 @@
 from pyramid.view import view_config
-from pyramid.response import JSONResponse
-from academico.services.tarea_service import crear_tarea, obtener_tareas, cambiar_estado_tarea
-from academico.models.tarea import EstadoTarea
+from pyramid.response import Response  # Cambiado de JSONResponse a Response
+from Academico.services.tarea_service import crear_tarea, obtener_tareas, cambiar_estado_tarea
+from Academico.models.tarea import EstadoTarea
 
 @view_config(route_name="tarea_crear", renderer="json", request_method="POST", permission="profesor")
 def crear_tarea_view(request):
@@ -14,7 +14,7 @@ def crear_tarea_view(request):
     fecha_entrega = data.get("fecha_entrega")
 
     if not all([id_curso, titulo, fecha_entrega]):
-        return JSONResponse({"error": "Faltan datos"}, status=400)
+        return Response(json={"error": "Faltan datos"}, status=400)
 
     resultado = crear_tarea(dbsession, id_curso, titulo, descripcion, fecha_entrega)
     return resultado
@@ -36,12 +36,12 @@ def actualizar_estado_tarea_view(request):
     nuevo_estado = data.get("estado")
 
     if not all([id_tarea, nuevo_estado]):
-        return JSONResponse({"error": "Faltan datos"}, status=400)
+        return Response(json={"error": "Faltan datos"}, status=400)
 
     try:
         estado_enum = EstadoTarea[nuevo_estado]
     except KeyError:
-        return JSONResponse({"error": "Estado inválido"}, status=400)
+        return Response(json={"error": "Estado inválido"}, status=400)
 
     resultado = cambiar_estado_tarea(dbsession, id_tarea, estado_enum)
     return resultado

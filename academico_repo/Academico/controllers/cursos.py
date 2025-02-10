@@ -1,8 +1,7 @@
 from pyramid.view import view_config
 from pyramid.response import Response
-from academico.services.curso_service import crear_curso
-from academico.services.matricula_service import matricular_estudiante
-from pyramid.security import authenticated_userid
+from Academico.services.curso_service import crear_curso
+from Academico.services.matricula_service import matricular_estudiante
 
 @view_config(route_name='curso_crear', renderer='json', request_method='POST', permission='admin')
 def curso_crear_view(request):

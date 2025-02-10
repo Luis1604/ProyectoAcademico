@@ -4,7 +4,6 @@ from sqlalchemy.orm import configure_mappers
 import zope.sqlalchemy
 from pyramid.config import Configurator
 from Academico.models.meta import initialize_engine, initialize_session, Base
-from .mymodel import MyModel  # flake8: noqa
 from .meta import Base
 from .usuario import Usuario
 from .curso import Curso

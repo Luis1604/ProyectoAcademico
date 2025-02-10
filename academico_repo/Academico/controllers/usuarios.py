@@ -1,8 +1,7 @@
 from pyramid.view import view_config
-from .services.notificaciones import NotificacionService
-from pyramid.security import authenticated_userid, Allow
-from .services.usuarios import UsuarioService
-from .models import Usuario
+from Academico.services.notificaciones import NotificacionService
+from Academico.services.usuarios import UsuarioService
+from Academico.models import Usuario
 
 @view_config(route_name='crear_usuario', permission='create', renderer='json')
 def crear_usuario(request):
