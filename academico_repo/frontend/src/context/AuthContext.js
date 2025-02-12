@@ -1,34 +1,30 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { login } from "../api/auth";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
+    const handleLogin = async (email, contrasena) => {
+        try {
+            const data = await login(email, contrasena);
+            setUser(data.usuario);
+            localStorage.setItem("token", data.token);
+        } catch (error) {
+            console.error("Error en autenticación:", error);
+            throw error;
+        }
+    };
 
-  const signIn = async (email, password) => {
-    try {
-      const userData = await login(email, password);
-      localStorage.setItem("user", JSON.stringify(userData));
-      setUser(userData);
-    } catch (error) {
-      console.error("Error en login:", error);
-    }
-  };
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem("token");
+    };
 
-  const signOut = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

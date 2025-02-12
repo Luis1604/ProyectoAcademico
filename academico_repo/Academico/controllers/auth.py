@@ -47,15 +47,21 @@ def login_view(request):
 
         if not email or not contrasena:
             logger.warning("Intento de inicio de sesión con datos incompletos.")
-            return Response(json.dumps({"error": "Email y contraseña requeridos"}), content_type="application/json", status=400)
+            return Response(
+                json_body={"error": "Email y contraseña requeridos"},
+                status=400
+            )
 
         resultado = autenticar_usuario(dbsession, email, contrasena)
         logger.info(f"Inicio de sesión: {email}")
         return resultado
 
     except Exception as e:
-        logger.error(f"Error en login para {email}: {str(e)}", exc_info=True)
-        return Response(json.dumps({"error": "Error interno del servidor"}), content_type="application/json", status=500)
+        logger.error(f"Error en login para {email if 'email' in locals() else 'Desconocido'}: {str(e)}", exc_info=True)
+        return Response(
+            json_body={"error": "Error interno del servidor"},
+            status=500
+        )
 
 @view_config(route_name='recuperar', renderer='json', request_method='POST', permission=NO_PERMISSION_REQUIRED)
 def recuperar_contrasena_view(request):

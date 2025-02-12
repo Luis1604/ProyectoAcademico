@@ -1,5 +1,5 @@
 from pyramid.config import Configurator
-from Academico.controllers import auth, cursos, reportes, tareas, usuarios, asistencias
+from Academico.controllers import auth, cursos, reportes, tareas, usuarios, asistencias, options
 
 
 def includeme(config):
@@ -39,6 +39,8 @@ def includeme(config):
     config.add_route("reporte_asistencias_pdf_view", "/api/reporte/asistencias/{id_curso}/pdf")
     config.add_route("reporte_calificaciones_excel_view", "/api/reporte/calificaciones/{id_curso}/excel")
 
+    #Manejo de solicitudes
+    config.add_route('options', '*path', request_method='OPTIONS')
 
     # Asignar las vistas a las rutas
     config.add_view(auth.registrar_usuario, route_name='register', renderer='json')
@@ -62,3 +64,6 @@ def includeme(config):
 
     config.add_view(reportes.reporte_asistencias_pdf_view, route_name='reporte_asistencias_pdf_view', renderer='json')
     config.add_view(reportes.reporte_calificaciones_excel_view, route_name='reporte_calificaciones_excel_view', renderer='json')
+
+    config.add_view(options.options_view, route_name='options', renderer='json')
+

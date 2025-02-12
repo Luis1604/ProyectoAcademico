@@ -2,6 +2,7 @@ from pyramid.config import Configurator
 from pyramid.security import Allow, Everyone, Authenticated
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.events import NewResponse
 from .models.meta import initialize_engine, initialize_session, Base
 import redis
 import zope.sqlalchemy
@@ -22,6 +23,14 @@ class Root:
 
     def __init__(self, request):
         pass
+
+def add_cors_headers(event):
+    """Agrega encabezados CORS a cada respuesta."""
+    if hasattr(event, 'response'):  # Asegurar que event tiene response
+        event.response.headers.setdefault('Access-Control-Allow-Origin', 'http://localhost:3000')
+        event.response.headers.setdefault('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        event.response.headers.setdefault('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        event.response.headers.setdefault('Access-Control-Allow-Credentials', 'true')
 
 def main(global_config, **settings):
     """Retorna la aplicación Pyramid."""
@@ -58,6 +67,14 @@ def main(global_config, **settings):
         reify=True
     )
 
+    # Agregar encabezados CORS a cada respuesta
+    config.add_subscriber(add_cors_headers, NewResponse)
+
+    # Manejar solicitudes OPTIONS (preflight)
+    config.add_route('options', '*path', request_method='OPTIONS')
+    config.add_view(lambda r: {}, route_name='options', renderer='json')
+
+    # Configurar archivos estáticos
     config.add_static_view(name='static', path='Academico:static', cache_max_age=3600)
 
     # Incluir rutas y vistas
