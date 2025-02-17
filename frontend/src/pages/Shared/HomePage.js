@@ -24,14 +24,17 @@ const HomePage = () => {
           <div className="feature-card">
             <h3>📚 Gestión de Cursos</h3>
             <p>Organiza y administra tus cursos de manera fácil y rápida.</p>
+            <Link to="/admin/cursos" className="btn-secondary">Ver más</Link>
           </div>
           <div className="feature-card">
             <h3>✅ Control de Asistencias</h3>
             <p>Registra y visualiza la asistencia de tus estudiantes.</p>
+            <Link to="/profesor/asistencias" className="btn-secondary">Ver más</Link>
           </div>
           <div className="feature-card">
             <h3>📊 Reportes Personalizados</h3>
             <p>Descarga reportes detallados en formatos PDF y Excel.</p>
+            <Link to="/profesor/reportes" className="btn-secondary">Ver más</Link>
           </div>
         </section>
       </main>

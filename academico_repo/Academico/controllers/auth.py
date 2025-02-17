@@ -7,6 +7,7 @@ from Academico.services.user_service import registrar_usuario
 from Academico.services.auth_service import autenticar_usuario
 from Academico.services.recovery_service import recuperar_contrasena
 
+
 # Configuración del logger
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -53,13 +54,13 @@ def login_view(request):
             )
 
         resultado = autenticar_usuario(dbsession, email, contrasena)
-        logger.info(f"Inicio de sesión: {email}")
+        logger.info(f"Inicio de sesión exitoso: {email}")
         return resultado
 
     except Exception as e:
         logger.error(f"Error en login para {email if 'email' in locals() else 'Desconocido'}: {str(e)}", exc_info=True)
         return Response(
-            json_body={"error": "Error interno del servidor"},
+            json_body={"error": "Error interno del servidor en el login"},
             status=500
         )
 
@@ -81,3 +82,5 @@ def recuperar_contrasena_view(request):
     except Exception as e:
         logger.error(f"Error en recuperación de contraseña para {email}: {str(e)}", exc_info=True)
         return Response(json.dumps({"error": "Error interno del servidor"}), content_type="application/json", status=500)
+
+

@@ -28,6 +28,44 @@
   color: #61dafb;
 }
 
+.page-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 20px;
+  background: #2C74B3;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.page-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-primary {
+  padding: 10px 15px;
+  background: #0A2647;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background: #053B50;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

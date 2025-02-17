@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CursoList from "../../components/cursos/CursoList";
 import CursoForm from "../../components/cursos/CursoForm";
+import "../../styles/Gestion.css";
 
 const GestionCursos = () => {
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
@@ -14,10 +15,16 @@ const GestionCursos = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Gestión de Cursos</h2>
-      <CursoForm cursoSeleccionado={cursoSeleccionado} onSave={handleSave} />
-      <CursoList onEdit={handleEdit} />
+    <div className="page-container">
+      <header className="page-header">
+        <h2>📚 Gestión de Cursos</h2>
+      </header>
+      <main className="page-main">
+        <div className="gestion-content">
+          <CursoForm cursoSeleccionado={cursoSeleccionado} onSave={handleSave} />
+          <CursoList onEdit={handleEdit} />
+        </div>
+      </main>
     </div>
   );
 };

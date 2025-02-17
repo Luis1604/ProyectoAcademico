@@ -86,6 +86,6 @@ def main(global_config, **settings):
 
 def get_tm_session(session_factory, transaction_manager, request=None):
     """Retorna una sesión de SQLAlchemy gestionada por zope.sqlalchemy."""
-    dbsession = session_factory(info={"request": request})
+    dbsession = session_factory()
     zope.sqlalchemy.register(dbsession, transaction_manager=transaction_manager)
     return dbsession
