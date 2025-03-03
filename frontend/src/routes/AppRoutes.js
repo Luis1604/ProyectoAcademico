@@ -31,13 +31,13 @@ const AppRoutes = () => {
 
       <Route
         path="/admin/*"
-        element={<PrivateRoute rolesPermitidos={["admin"]} />}
+        element={<PrivateRoute rolesPermitidos={["administrador"]} />}
       >
         <Route path="dashboard" element={<DashboardAdmin />} />
       </Route>
 
       {/* Rutas protegidas por rol */}
-      <Route element={<PrivateRoute role="admin" user={user} />}>
+      <Route element={<PrivateRoute role="administrador" user={user} />}>
         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
         <Route path="/admin/usuarios" element={<GestionUsuarios />} />
         <Route path="/admin/cursos" element={<GestionCursos />} />

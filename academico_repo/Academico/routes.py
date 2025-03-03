@@ -1,4 +1,4 @@
-from pyramid.config import Configurator
+from pyramid.config import Configurator # type: ignore
 from Academico.controllers import auth, cursos, reportes, tareas, usuarios, asistencias, options
 
 
@@ -9,6 +9,7 @@ def includeme(config):
     config.add_route('login', '/api/auth/login')
     config.add_route('logout', '/api/auth/logout')
     config.add_route('recuperar', '/api/auth/recuperar')
+    config.add_route('usuario', '/api/auth/usuario')
 
     config.add_route('crear_usuario', '/api/usuarios/crear')
     config.add_route('editar_usuario', '/api/usuarios/editar')
@@ -46,6 +47,7 @@ def includeme(config):
     config.add_view(auth.registrar_usuario, route_name='register', renderer='json')
     config.add_view(auth.login_view, route_name='login', renderer='json')
     config.add_view(auth.recuperar_contrasena, route_name='recuperar', renderer='json')
+    config.add_view(auth.obtener_usuario, route_name='usuario', renderer='json')
 
     config.add_view(usuarios.asignar_curso, route_name='asignar_curso', renderer='json', permission='assign')
     config.add_view(usuarios.crear_usuario, route_name='crear_usuario', renderer='json', permission='create')

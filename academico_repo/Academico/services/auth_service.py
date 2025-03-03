@@ -1,4 +1,4 @@
-import jwt
+import jwt  # type: ignore
 import datetime
 import os
 from Academico.models.usuario import Usuario
@@ -20,7 +20,7 @@ def autenticar_usuario(dbsession, email, contrasena):
     payload = {
         'sub': usuario.id,
         'rol': usuario.rol.name,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=8)  # Expira en 8 horas
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2)  # Expira en 2 horas
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
